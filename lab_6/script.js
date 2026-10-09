@@ -1,21 +1,20 @@
-// ===== Налаштування варіанту =====
-const STUDENT_NAME = "Струсь Юрій"; // <-- впиши своє ім'я та прізвище
+const STUDENT_NAME = "Струсь Юрій";
 const VARIANT = 14;
 
-// ===== 1. Зміна вмісту елемента (клік) =====
+//Зміна вмісту елемента
 const text = document.getElementById("text");
 const changeBtn = document.getElementById("change-btn");
 
 function changeText() {
   text.textContent = "Текст змінено! Це новий вміст.";
-  // перезапуск анімації
+  //перезапуск анімації
   text.classList.remove("changed");
   void text.offsetWidth;
   text.classList.add("changed");
 }
 changeBtn.addEventListener("click", changeText);
 
-// ===== 2. Наведення курсору – зміна стилю =====
+//Наведення курсору
 const hoverBtn = document.getElementById("hover-btn");
 
 hoverBtn.addEventListener("mouseover", () => {
@@ -29,7 +28,7 @@ hoverBtn.addEventListener("mouseout", () => {
   hoverBtn.style.transform = "";
 });
 
-// ===== 3. Додавання / видалення елементів =====
+//Додавання / видалення елементів 
 const container = document.getElementById("container");
 const addBtn = document.getElementById("add-btn");
 const removeBtn = document.getElementById("remove-btn");
@@ -53,7 +52,7 @@ removeBtn.addEventListener("click", () => {
   }
 });
 
-// ===== 4. Додаткове завдання: натиснути VARIANT разів =====
+//Додаткове завдання
 const variantBtn = document.getElementById("variant-btn");
 const counter = document.getElementById("counter");
 let clicks = 0;
