@@ -1,5 +1,5 @@
 // ===== Налаштування варіанту =====
-const STUDENT_NAME = "Юрій Струсь"; // <-- впиши своє ім'я та прізвище
+const STUDENT_NAME = "Струсь Юрій"; // <-- впиши своє ім'я та прізвище
 const VARIANT = 14;
 
 // ===== 1. Зміна вмісту елемента (клік) =====
@@ -8,6 +8,10 @@ const changeBtn = document.getElementById("change-btn");
 
 function changeText() {
   text.textContent = "Текст змінено! Це новий вміст.";
+  // перезапуск анімації
+  text.classList.remove("changed");
+  void text.offsetWidth;
+  text.classList.add("changed");
 }
 changeBtn.addEventListener("click", changeText);
 
@@ -15,12 +19,14 @@ changeBtn.addEventListener("click", changeText);
 const hoverBtn = document.getElementById("hover-btn");
 
 hoverBtn.addEventListener("mouseover", () => {
-  hoverBtn.style.backgroundColor = "#ffd54f";
+  hoverBtn.style.background = "linear-gradient(135deg, #f59e0b, #ec4899)";
   hoverBtn.style.fontSize = "20px";
+  hoverBtn.style.transform = "rotate(-3deg) scale(1.08)";
 });
 hoverBtn.addEventListener("mouseout", () => {
-  hoverBtn.style.backgroundColor = "";
+  hoverBtn.style.background = "";
   hoverBtn.style.fontSize = "";
+  hoverBtn.style.transform = "";
 });
 
 // ===== 3. Додавання / видалення елементів =====
@@ -39,8 +45,10 @@ addBtn.addEventListener("click", () => {
 });
 
 removeBtn.addEventListener("click", () => {
-  if (container.lastElementChild) {
-    container.lastElementChild.remove();
+  const last = container.lastElementChild;
+  if (last && !last.classList.contains("removing")) {
+    last.classList.add("removing");
+    last.addEventListener("animationend", () => last.remove());
     console.log("Останній елемент видалено");
   }
 });
@@ -53,6 +61,9 @@ let clicks = 0;
 variantBtn.addEventListener("click", () => {
   clicks++;
   counter.textContent = `Натискань: ${clicks} / ${VARIANT}`;
+  counter.classList.remove("bump");
+  void counter.offsetWidth;
+  counter.classList.add("bump");
   if (clicks === VARIANT) {
     alert(`${STUDENT_NAME} варіант номер ${VARIANT}!`);
     clicks = 0;
