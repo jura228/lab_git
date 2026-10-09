@@ -13,11 +13,11 @@
         // Номер варіанту (14 — парне число)
         const VARIANT = 14;
 
-        // Завдання 1: Привітання користувача
+        // Привітання користувача
         function greetUser() {
             console.log("Завдання 1.");
 
-            // Запитуємо ім'я користувача
+            // Запит ім'я користувача
             let userName = prompt("Введіть своє ім'я:");
 
             // Перевірка: користувач натиснув "Скасувати" або нічого не ввів
@@ -32,7 +32,7 @@
             console.log(message);
         }
 
-        // Завдання 2: Проста арифметика
+        // арифметика
         function calculate() {
             console.log("Завдання 2.");
 
@@ -49,12 +49,12 @@
 
             let result;
             if (VARIANT % 2 === 0) {
-                // Парний варіант: сума та різниця
+                // Парний: сума та різниця
                 let sum = a + b;
                 let diff = a - b;
                 result = "Сума: " + sum + "\nРізниця: " + diff;
             } else {
-                // Непарний варіант: добуток та частка
+                // Непарний: добуток та частка
                 let product = a * b;
                 let quotient = (b === 0) ? "ділення на нуль неможливе" : a / b;
                 result = "Добуток: " + product + "\nЧастка: " + quotient;
@@ -64,12 +64,12 @@
             console.log(result);
         }
 
-        // Завдання 3: Вік користувача
+        // Вік користувача
         function calculateAge() {
             console.log("Завдання 3.");
 
             const currentYear = new Date().getFullYear(); // поточний рік
-            const myAge = 19;                             // мій вік (константа)
+            const myAge = 19;                             // мій вік
 
             let birthYear = parseInt(prompt("Введіть свій рік народження:"));
 
