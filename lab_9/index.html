@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        padding: 40px 16px;
+        margin: 0;
+    }
+    .app {
+        background: #fff;
+        width: 100%;
+        max-width: 500px;
+        padding: 24px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    }
+    h1 { margin-top: 0; text-align: center; }
+    .add { display: flex; gap: 8px; }
+    .add input { flex: 1; }
+    input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+    button {
+        padding: 10px 14px;
+        border: none;
+        border-radius: 6px;
+        background: #4a7cf7;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    button:hover { background: #3862d1; }
+    button.del { background: #e74c3c; }
+    button.del:hover { background: #c0392b; }
+    button.edit { background: #f39c12; }
+    button.edit:hover { background: #d68910; }
+    button.save { background: #27ae60; }
+    button.save:hover { background: #1e8449; }
+    .sort { width: 100%; margin: 12px 0; background: #6c757d; }
+    .sort:hover { background: #565e64; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    li span { flex: 1; word-break: break-word; }
+    li input[type="text"] { flex: 1; padding: 6px; }
+    .empty { text-align: center; color: #888; padding: 16px 0; }
+</style>
+</head>
+<body>
+<div class="app">
+    <h1>Список завдань</h1>
+
+    <div class="add">
+        <input type="text" id="taskInput" placeholder="Нове завдання...">
+        <button id="addBtn">Додати</button>
+    </div>
+
+    <button class="sort" id="sortBtn">Сортувати за алфавітом</button>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+    const STORAGE_KEY = "tasks";
+
+    const taskInput = document.getElementById("taskInput");
+    const addBtn = document.getElementById("addBtn");
+    const sortBtn = document.getElementById("sortBtn");
+    const taskList = document.getElementById("taskList");
+
+    // Завантаження списку з LocalStorage
+    let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    // id завдання, яке зараз редагується
+    let editingId = null;
+
+    function saveTasks() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+    }
+
+    function render() {
+        taskList.innerHTML = "";
+
+        if (tasks.length === 0) {
+            taskList.innerHTML = '<li class="empty">Завдань поки немає</li>';
+            return;
+        }
+
+        tasks.forEach(task => {
+            const li = document.createElement("li");
+
+            if (task.id === editingId) {
+                // Режим редагування
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = task.text;
+                input.addEventListener("keydown", e => {
+                    if (e.key === "Enter") saveEdit(task.id, input.value);
+                });
+
+                const saveBtn = document.createElement("button");
+                saveBtn.className = "save";
+                saveBtn.textContent = "Зберегти";
+                saveBtn.onclick = () => saveEdit(task.id, input.value);
+
+                li.append(input, saveBtn);
+                setTimeout(() => input.focus(), 0);
+            } else {
+                // Звичайний режим
+                const span = document.createElement("span");
+                span.textContent = task.text;
+
+                const editBtn = document.createElement("button");
+                editBtn.className = "edit";
+                editBtn.textContent = "Редагувати";
+                editBtn.onclick = () => {
+                    editingId = task.id;
+                    render();
+                };
+
+                const delBtn = document.createElement("button");
+                delBtn.className = "del";
+                delBtn.textContent = "Видалити";
+                delBtn.onclick = () => deleteTask(task.id);
+
+                li.append(span, editBtn, delBtn);
+            }
+
+            taskList.appendChild(li);
+        });
+    }
+
+    function addTask() {
+        const text = taskInput.value.trim();
+        if (!text) return;
+        tasks.push({ id: Date.now(), text: text });
+        taskInput.value = "";
+        saveTasks();
+        render();
+    }
+
+    function deleteTask(id) {
+        tasks = tasks.filter(t => t.id !== id);
+        saveTasks();
+        render();
+    }
+
+    function saveEdit(id, newText) {
+        newText = newText.trim();
+        if (newText) {
+            const task = tasks.find(t => t.id === id);
+            task.text = newText;
+            saveTasks();
+        }
+        editingId = null;
+        render();
+    }
+
+    function sortTasks() {
+        tasks.sort((a, b) => a.text.localeCompare(b.text, "uk"));
+        saveTasks();
+        render();
+    }
+
+    addBtn.addEventListener("click", addTask);
+    taskInput.addEventListener("keydown", e => {
+        if (e.key === "Enter") addTask();
+    });
+    sortBtn.addEventListener("click", sortTasks);
+
+    render();
+</script>
+</body>
+</html>
