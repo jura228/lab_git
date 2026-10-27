@@ -1,19 +1,19 @@
 :root {
-    --bg: #f4f6fb;
+    --bg: #f1effa;
     --card: #ffffff;
-    --text: #222;
-    --accent: #4a7cf7;
-    --accent-dark: #3862d1;
-    --border: #ccd3e0;
+    --text: #1b1b2f;
+    --purple: #7b3fe4;
+    --blue: #2f6fed;
+    --green: #1fbf8f;
+    --border: #cfc8ea;
+    --gradient: linear-gradient(135deg, #7b3fe4, #2f6fed, #1fbf8f);
 }
 
 body.dark {
-    --bg: #14171f;
-    --card: #1f2430;
-    --text: #e8eaf0;
-    --accent: #6b95ff;
-    --accent-dark: #4f7ae8;
-    --border: #3a4152;
+    --bg: #0b0b12;
+    --card: #15151f;
+    --text: #ececf5;
+    --border: #35354a;
 }
 
 * { box-sizing: border-box; }
@@ -30,35 +30,37 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, #4a7cf7, #7a5cf0);
+    background: var(--gradient);
     color: #fff;
     text-align: center;
-    padding: 50px 20px 40px;
+    padding: 55px 20px 45px;
 }
 
-header h1 { margin: 0 0 8px; font-size: 40px; }
-header p { margin: 0 0 16px; font-size: 18px; }
+header h1 { margin: 0 0 8px; font-size: 42px; letter-spacing: 1px; }
+header p { margin: 0 0 18px; font-size: 18px; }
 
 nav {
     display: flex;
     justify-content: center;
     gap: 24px;
     padding: 14px;
-    background-color: var(--card);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+    background-color: #0b0b12;
     position: sticky;
     top: 0;
+    border-bottom: 3px solid transparent;
+    border-image: var(--gradient) 1;
 }
 
 nav a {
-    color: var(--accent);
+    color: #fff;
     text-decoration: none;
     font-weight: bold;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 6px;
+    transition: background .2s;
 }
 
-nav a:hover { background-color: var(--accent); color: #fff; }
+nav a:hover { background: var(--gradient); }
 
 main {
     max-width: 800px;
@@ -71,17 +73,21 @@ section {
     padding: 24px;
     margin-bottom: 24px;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+    border-top: 5px solid transparent;
+    border-image: var(--gradient) 1;
+    box-shadow: 0 4px 14px rgba(60, 30, 140, .18);
 }
 
 section h2 {
     margin-top: 0;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 6px;
+    color: var(--purple);
 }
+
+body.dark section h2 { color: var(--green); }
 
 ul { padding-left: 20px; }
 li { margin-bottom: 6px; }
+li::marker { color: var(--blue); }
 
 form { display: flex; flex-direction: column; gap: 6px; }
 
@@ -89,7 +95,7 @@ label { font-weight: bold; margin-top: 8px; }
 
 input, textarea {
     padding: 10px;
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 6px;
     font-size: 16px;
     font-family: inherit;
@@ -99,35 +105,41 @@ input, textarea {
 
 input:focus, textarea:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(74, 124, 247, .25);
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(47, 111, 237, .25);
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px 22px;
     border: none;
     border-radius: 6px;
-    background-color: var(--accent);
+    background: var(--gradient);
     color: #fff;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color .2s;
+    transition: transform .15s, box-shadow .15s;
 }
 
-button:hover { background-color: var(--accent-dark); }
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(47, 111, 237, .45);
+}
 
 form button { margin-top: 10px; align-self: flex-start; }
 
-header button { background-color: rgba(255, 255, 255, .2); border: 1px solid #fff; }
-header button:hover { background-color: rgba(255, 255, 255, .35); }
+header button {
+    background: rgba(0, 0, 0, .35);
+    border: 1px solid #fff;
+}
 
 .error { color: #e74c3c; min-height: 22px; margin: 4px 0 0; }
 
 footer {
     text-align: center;
-    padding: 20px;
-    background-color: var(--card);
-    border-top: 1px solid var(--border);
+    padding: 22px;
+    color: #fff;
+    background: linear-gradient(135deg, #0b0b12, #2a1a5e);
 }
 
 footer p { margin: 0; }
