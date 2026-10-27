@@ -1,77 +1,105 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Лабораторна робота 4: Галерея</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота 5: Вступ до JavaScript</title>
 </head>
 <body>
-  <header>
-    <h1>Фотогалерея: подорожі та природа</h1>
-  </header>
-  <main>
-    <div class="container">
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-1/400/300" alt="Гірський ранок">
-        <figcaption>1. Гірський ранок</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-2/400/300" alt="Лісова стежка">
-        <figcaption>2. Лісова стежка</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-3/400/300" alt="Озеро">
-        <figcaption>3. Озеро</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-4/400/300" alt="Водоспад">
-        <figcaption>4. Водоспад</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-5/400/300" alt="Полонина">
-        <figcaption>5. Полонина</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-6/400/300" alt="Старе місто">
-        <figcaption>6. Старе місто</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-7/400/300" alt="Річка">
-        <figcaption>7. Річка</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-8/400/300" alt="Захід сонця">
-        <figcaption>8. Захід сонця</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-9/400/300" alt="Туман">
-        <figcaption>9. Туман</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-10/400/300" alt="Осінній ліс">
-        <figcaption>10. Осінній ліс</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-11/400/300" alt="Міст">
-        <figcaption>11. Міст</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-12/400/300" alt="Зимові вершини">
-        <figcaption>12. Зимові вершини</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-13/400/300" alt="Квітуче поле">
-        <figcaption>13. Квітуче поле</figcaption>
-      </figure>
-      <figure class="box">
-        <img src="https://picsum.photos/seed/lab4-14/400/300" alt="Нічне небо">
-        <figcaption>14. Нічне небо</figcaption>
-      </figure>
-    </div>
-  </main>
-  <footer>
-    <p>Лабораторна робота №4, варіант 14</p>
-  </footer>
+    <h1>Лабораторна робота 5: Вступ до JavaScript</h1>
+    <p>Відкрийте консоль браузера (F12), щоб побачити результати.</p>
+
+    <script>
+        // Номер варіанту (14 — парне число)
+        const VARIANT = 14;
+
+        // Привітання користувача
+        function greetUser() {
+            console.log("Завдання 1.");
+
+            // Запит ім'я користувача
+            let userName = prompt("Введіть своє ім'я:");
+
+            // Перевірка: користувач натиснув "Скасувати" або нічого не ввів
+            if (userName === null || userName.trim() === "") {
+                alert("Ім'я не введено!");
+                console.log("Ім'я не введено!");
+                return;
+            }
+
+            let message = "Привіт, " + userName.trim() + "! Радий тебе бачити!";
+            alert(message);
+            console.log(message);
+        }
+
+        // арифметика
+        function calculate() {
+            console.log("Завдання 2.");
+
+            // Зчитуємо два числа та перетворюємо їх у числовий тип
+            let a = parseFloat(prompt("Введіть перше число:"));
+            let b = parseFloat(prompt("Введіть друге число:"));
+
+            // Перевірка коректності введених даних
+            if (isNaN(a) || isNaN(b)) {
+                alert("Помилка: потрібно ввести числа!");
+                console.log("Помилка: потрібно ввести числа!");
+                return;
+            }
+
+            let result;
+            if (VARIANT % 2 === 0) {
+                // Парний: сума та різниця
+                let sum = a + b;
+                let diff = a - b;
+                result = "Сума: " + sum + "\nРізниця: " + diff;
+            } else {
+                // Непарний: добуток та частка
+                let product = a * b;
+                let quotient = (b === 0) ? "ділення на нуль неможливе" : a / b;
+                result = "Добуток: " + product + "\nЧастка: " + quotient;
+            }
+
+            alert(result);
+            console.log(result);
+        }
+
+        // Вік користувача
+        function calculateAge() {
+            console.log("Завдання 3.");
+
+            const currentYear = new Date().getFullYear(); // поточний рік
+            const myAge = 19;                             // мій вік
+
+            let birthYear = parseInt(prompt("Введіть свій рік народження:"));
+
+            // Перевірка коректності введених даних
+            if (isNaN(birthYear) || birthYear > currentYear || birthYear < 1900) {
+                alert("Помилка: введіть коректний рік народження!");
+                console.log("Помилка: введіть коректний рік народження!");
+                return;
+            }
+
+            let userAge = currentYear - birthYear;      // вік користувача
+            let difference = Math.abs(userAge - myAge); // різниця у віці
+
+            let message;
+            if (userAge > myAge) {
+                message = "Ваш вік: " + userAge + ".\nКористувач старший на " + difference + " років.";
+            } else if (userAge < myAge) {
+                message = "Ваш вік: " + userAge + ".\nКористувач молодший на " + difference + " років.";
+            } else {
+                message = "Ваш вік: " + userAge + ".\nВи з однаковим віком!";
+            }
+
+            alert(message);
+            console.log(message);
+        }
+
+        // Виклик функцій
+        greetUser();
+        calculate();
+        calculateAge();
+    </script>
 </body>
 </html>
