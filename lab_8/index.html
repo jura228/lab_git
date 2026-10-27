@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Список користувачів</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        margin: 0;
+        padding: 30px 16px;
+        display: flex;
+        justify-content: center;
+    }
+    .container {
+        background: #fff;
+        width: 100%;
+        max-width: 900px;
+        padding: 24px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    }
+    h1 { margin-top: 0; text-align: center; }
+    button {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        background: #4a7cf7;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    button:hover { background: #3862d1; }
+    #refreshBtn { margin-bottom: 14px; background: #27ae60; }
+    #refreshBtn:hover { background: #1e8449; }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 24px;
+    }
+    th, td {
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th { background: #4a7cf7; color: #fff; }
+    tr:nth-child(even) { background: #f7f9fc; }
+    tr:hover { background: #eaf0ff; }
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    form input {
+        flex: 1;
+        min-width: 160px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+    h2 { margin: 0 0 10px; font-size: 18px; }
+    .status { margin-bottom: 12px; color: #555; }
+    .status.error { color: #c0392b; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Список користувачів</h1>
+
+    <button id="refreshBtn">Оновити</button>
+    <div id="status" class="status"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Ім'я</th>
+                <th>Email</th>
+                <th>Місто</th>
+            </tr>
+        </thead>
+        <tbody id="usersTable"></tbody>
+    </table>
+
+    <h2>Додати користувача</h2>
+    <form id="addForm">
+        <input type="text" id="nameInput" placeholder="Ім'я" required>
+        <input type="email" id="emailInput" placeholder="Email" required>
+        <input type="text" id="cityInput" placeholder="Місто" required>
+        <button type="submit">Добавити</button>
+    </form>
+</div>
+
+<script>
+    const API_URL = "https://jsonplaceholder.typicode.com/users";
+
+    const tableBody = document.getElementById("usersTable");
+    const statusEl = document.getElementById("status");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const addForm = document.getElementById("addForm");
+
+    // Додає один рядок у таблицю
+    function addRow(id, name, email, city) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${id}</td>
+            <td>${name}</td>
+            <td>${email}</td>
+            <td>${city}</td>
+        `;
+        tableBody.appendChild(row);
+    }
+
+    function setStatus(text, isError = false) {
+        statusEl.textContent = text;
+        statusEl.className = isError ? "status error" : "status";
+    }
+
+    // Завантаження користувачів з API
+    function loadUsers() {
+        setStatus("Завантаження...");
+
+        fetch(API_URL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Помилка при отриманні даних");
+                }
+                return response.json();
+            })
+            .then(data => {
+                tableBody.innerHTML = ""; // очищення перед вставкою
+                data.forEach(user => {
+                    addRow(user.id, user.name, user.email, user.address.city);
+                });
+                setStatus(`Завантажено користувачів: ${data.length}`);
+            })
+            .catch(error => {
+                console.error("Помилка:", error);
+                setStatus("Не вдалося завантажити дані: " + error.message, true);
+            });
+    }
+
+    // Кнопка "Оновити"
+    refreshBtn.addEventListener("click", loadUsers);
+
+    // Форма додавання запису
+    addForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("nameInput").value.trim();
+        const email = document.getElementById("emailInput").value.trim();
+        const city = document.getElementById("cityInput").value.trim();
+        if (!name || !email || !city) return;
+
+        const nextId = tableBody.rows.length + 1;
+        // textContent замість innerHTML для введених даних, щоб уникнути вставки HTML
+        const row = document.createElement("tr");
+        [nextId, name, email, city].forEach(value => {
+            const td = document.createElement("td");
+            td.textContent = value;
+            row.appendChild(td);
+        });
+        tableBody.appendChild(row);
+
+        addForm.reset();
+        setStatus(`Додано користувача: ${name}`);
+    });
+
+    // Завантаження при відкритті сторінки
+    loadUsers();
+</script>
+</body>
+</html>
