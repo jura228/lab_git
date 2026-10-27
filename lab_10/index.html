@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Юра — сайт-візитка</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Юра</h1>
+        <p>Студент, вивчаю автоматизацію, комп’ютерно-інтегровані технології та робототехніку</p>
+        <button id="themeBtn" type="button">Темна тема</button>
+    </header>
+
+    <nav>
+        <a href="#about">Про себе</a>
+        <a href="#skills">Навички</a>
+        <a href="#contacts">Контакти</a>
+    </nav>
+
+    <main>
+        <section id="about">
+            <h2>Про себе</h2>
+            <p>
+                Мене звати Юра, мені 19 років. Навчаюся у Львівському національному
+                університеті ветеринарної медицини та біотехнологій імені 
+                С.З. Ґжицького за спеціальністю
+                «Автоматизація, комп’ютерно-інтегровані технології та робототехніка». 
+            </p>
+        </section>
+
+        <section id="skills">
+            <h2>Навички</h2>
+            <ul>
+                <li>Базові знання HTML CSS JavaScript</li>
+                <li>Граю у волейбол та нстільний теніс</li>
+            </ul>
+        </section>
+
+        <section id="contacts">
+            <h2>Контакти</h2>
+            <form id="contactForm" novalidate>
+                <label for="name">Ім'я</label>
+                <input type="text" id="name" placeholder="Ваше ім'я">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="example@mail.com">
+
+                <label for="message">Повідомлення</label>
+                <textarea id="message" rows="5" placeholder="Ваше повідомлення"></textarea>
+
+                <p id="error" class="error"></p>
+                <button type="submit">Надіслати</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Юра. Усі права захищено.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
