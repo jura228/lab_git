@@ -1,47 +1,105 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Лабораторна робота 6: Маніпуляція DOM та обробка подій</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота 5: Вступ до JavaScript</title>
 </head>
 <body>
-  <header>
-    <h1>Маніпуляція DOM та обробка подій</h1>
-  </header>
+    <h1>Лабораторна робота 5: Вступ до JavaScript</h1>
+    <p>Відкрийте консоль браузера (F12), щоб побачити результати.</p>
 
-  <main>
-    <section id="change-section">
-      <h2>Зміна вмісту елемента</h2>
-      <p id="text">Це початковий текст.</p>
-      <button id="change-btn">Змінити текст</button>
-    </section>
+    <script>
+        // Номер варіанту (14 — парне число)
+        const VARIANT = 14;
 
-    <section id="events-section">
-      <h2>Обробка подій</h2>
-      <button id="hover-btn">Наведіть курсор на мене</button>
-      <p id="hover-text">Наведіть курсор на кнопку – ви побачите зміну стилю.</p>
-    </section>
+        // Привітання користувача
+        function greetUser() {
+            console.log("Завдання 1.");
 
-    <section id="add-section">
-      <h2>Додавання нового елемента</h2>
-      <button id="add-btn">Додати елемент</button>
-      <button id="remove-btn">Видалити останній</button>
-      <div id="container"></div>
-    </section>
+            // Запит ім'я користувача
+            let userName = prompt("Введіть своє ім'я:");
 
-    <section id="variant-section">
-      <h2>Додаткове завдання</h2>
-      <button id="variant-btn">Натисніть 14 разів!</button>
-      <p id="counter">Натискань: 0 / 14</p>
-    </section>
-  </main>
+            // Перевірка: користувач натиснув "Скасувати" або нічого не ввів
+            if (userName === null || userName.trim() === "") {
+                alert("Ім'я не введено!");
+                console.log("Ім'я не введено!");
+                return;
+            }
 
-  <footer>
-    <p>Лабораторна робота 6. JavaScript, DOM, події.</p>
-  </footer>
+            let message = "Привіт, " + userName.trim() + "! Радий тебе бачити!";
+            alert(message);
+            console.log(message);
+        }
 
-  <script src="script.js"></script>
+        // арифметика
+        function calculate() {
+            console.log("Завдання 2.");
+
+            // Зчитуємо два числа та перетворюємо їх у числовий тип
+            let a = parseFloat(prompt("Введіть перше число:"));
+            let b = parseFloat(prompt("Введіть друге число:"));
+
+            // Перевірка коректності введених даних
+            if (isNaN(a) || isNaN(b)) {
+                alert("Помилка: потрібно ввести числа!");
+                console.log("Помилка: потрібно ввести числа!");
+                return;
+            }
+
+            let result;
+            if (VARIANT % 2 === 0) {
+                // Парний: сума та різниця
+                let sum = a + b;
+                let diff = a - b;
+                result = "Сума: " + sum + "\nРізниця: " + diff;
+            } else {
+                // Непарний: добуток та частка
+                let product = a * b;
+                let quotient = (b === 0) ? "ділення на нуль неможливе" : a / b;
+                result = "Добуток: " + product + "\nЧастка: " + quotient;
+            }
+
+            alert(result);
+            console.log(result);
+        }
+
+        // Вік користувача
+        function calculateAge() {
+            console.log("Завдання 3.");
+
+            const currentYear = new Date().getFullYear(); // поточний рік
+            const myAge = 19;                             // мій вік
+
+            let birthYear = parseInt(prompt("Введіть свій рік народження:"));
+
+            // Перевірка коректності введених даних
+            if (isNaN(birthYear) || birthYear > currentYear || birthYear < 1900) {
+                alert("Помилка: введіть коректний рік народження!");
+                console.log("Помилка: введіть коректний рік народження!");
+                return;
+            }
+
+            let userAge = currentYear - birthYear;      // вік користувача
+            let difference = Math.abs(userAge - myAge); // різниця у віці
+
+            let message;
+            if (userAge > myAge) {
+                message = "Ваш вік: " + userAge + ".\nКористувач старший на " + difference + " років.";
+            } else if (userAge < myAge) {
+                message = "Ваш вік: " + userAge + ".\nКористувач молодший на " + difference + " років.";
+            } else {
+                message = "Ваш вік: " + userAge + ".\nВи з однаковим віком!";
+            }
+
+            alert(message);
+            console.log(message);
+        }
+
+        // Виклик функцій
+        greetUser();
+        calculate();
+        calculateAge();
+    </script>
 </body>
 </html>

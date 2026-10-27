@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Форма реєстрації</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="form-box">
+    <h2>Форма реєстрації</h2>
+    <p class="subtitle">Створіть свій акаунт</p>
+
+    <form id="regForm" novalidate>
+      <div class="field">
+        <label for="name">Ім'я:</label>
+        <input type="text" id="name" name="name" placeholder="Ваше ім'я">
+        <div class="error" id="nameError"></div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="test@test.com">
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="field">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" placeholder="Мінімум 6 символів">
+        <div class="error" id="passwordError"></div>
+      </div>
+
+      <div class="field">
+        <label for="confirm">Повторіть пароль:</label>
+        <input type="password" id="confirm" name="confirm" placeholder="Повторіть пароль">
+        <div class="error" id="confirmError"></div>
+      </div>
+
+      <div class="field">
+        <label for="age">Вік:</label>
+        <input type="number" id="age" name="age" placeholder="10+">
+        <div class="error" id="ageError"></div>
+      </div>
+
+      <div class="field">
+        <label>Стать:</label>
+        <div class="radio-group">
+          <input type="radio" id="male" name="gender" value="male">
+          <label for="male" class="radio-label">Чоловік</label>
+          <input type="radio" id="female" name="gender" value="female">
+          <label for="female" class="radio-label">Жінка</label>
+        </div>
+        <div class="error" id="genderError"></div>
+      </div>
+
+      <button type="submit">Зареєструватися</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

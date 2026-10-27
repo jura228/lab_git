@@ -1,89 +1,71 @@
-const form = document.getElementById("regForm");
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const STUDENT_NAME = "Струсь Юрій";
+const VARIANT = 14;
 
-function setError(inputId, errorId, text) {
-  const input = document.getElementById(inputId);
-  document.getElementById(errorId).textContent = text;
-  if (input) {
-    input.classList.remove("valid", "invalid");
-    // перезапуск анімації shake
-    void input.offsetWidth;
-    input.classList.add("invalid");
-  }
-  return false;
+//Зміна вмісту елемента
+const text = document.getElementById("text");
+const changeBtn = document.getElementById("change-btn");
+
+function changeText() {
+  text.textContent = "Текст змінено! Це новий вміст.";
+  //перезапуск анімації
+  text.classList.remove("changed");
+  void text.offsetWidth;
+  text.classList.add("changed");
 }
+changeBtn.addEventListener("click", changeText);
 
-function setOk(inputId, errorId) {
-  const input = document.getElementById(inputId);
-  document.getElementById(errorId).textContent = "";
-  if (input) {
-    input.classList.remove("invalid");
-    input.classList.add("valid");
-  }
-  return true;
-}
+//Наведення курсору
+const hoverBtn = document.getElementById("hover-btn");
 
-function checkName() {
-  const v = document.getElementById("name").value.trim();
-  return v === "" ? setError("name", "nameError", "Введіть ім'я") : setOk("name", "nameError");
-}
-
-function checkEmail() {
-  const v = document.getElementById("email").value.trim();
-  if (v === "") return setError("email", "emailError", "Введіть email");
-  if (!emailRegex.test(v)) return setError("email", "emailError", "Невірний формат email");
-  return setOk("email", "emailError");
-}
-
-function checkPassword() {
-  const v = document.getElementById("password").value;
-  return v.length < 6
-    ? setError("password", "passwordError", "Пароль має містити мінімум 6 символів")
-    : setOk("password", "passwordError");
-}
-
-function checkConfirm() {
-  const p = document.getElementById("password").value;
-  const c = document.getElementById("confirm").value;
-  if (c === "") return setError("confirm", "confirmError", "Підтвердіть пароль");
-  if (c !== p) return setError("confirm", "confirmError", "Паролі не збігаються");
-  return setOk("confirm", "confirmError");
-}
-
-function checkAge() {
-  const v = document.getElementById("age").value;
-  if (v === "") return setError("age", "ageError", "Введіть вік");
-  if (Number(v) < 10) return setError("age", "ageError", "Вік має бути 10 або більше");
-  return setOk("age", "ageError");
-}
-
-function checkGender() {
-  const g = document.querySelector('input[name="gender"]:checked');
-  if (!g) return setError(null, "genderError", "Оберіть стать");
-  document.getElementById("genderError").textContent = "";
-  return true;
-}
-
-// перевірка "наживо" під час введення
-document.getElementById("name").addEventListener("input", checkName);
-document.getElementById("email").addEventListener("input", checkEmail);
-document.getElementById("password").addEventListener("input", checkPassword);
-document.getElementById("confirm").addEventListener("input", checkConfirm);
-document.getElementById("age").addEventListener("input", checkAge);
-document.querySelectorAll('input[name="gender"]').forEach(function (r) {
-  r.addEventListener("change", checkGender);
+hoverBtn.addEventListener("mouseover", () => {
+  hoverBtn.style.background = "linear-gradient(135deg, #f59e0b, #ec4899)";
+  hoverBtn.style.fontSize = "20px";
+  hoverBtn.style.transform = "rotate(-3deg) scale(1.08)";
+});
+hoverBtn.addEventListener("mouseout", () => {
+  hoverBtn.style.background = "";
+  hoverBtn.style.fontSize = "";
+  hoverBtn.style.transform = "";
 });
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
+//Додавання / видалення елементів 
+const container = document.getElementById("container");
+const addBtn = document.getElementById("add-btn");
+const removeBtn = document.getElementById("remove-btn");
+let itemCount = 0;
 
-  const results = [checkName(), checkEmail(), checkPassword(), checkConfirm(), checkAge(), checkGender()];
+addBtn.addEventListener("click", () => {
+  itemCount++;
+  const item = document.createElement("div");
+  item.classList.add("new-item");
+  item.textContent = `Це новий доданий елемент №${itemCount}.`;
+  container.appendChild(item);
+  console.log("Додано елемент", itemCount);
+});
 
-  if (results.every(Boolean)) {
-    alert("Реєстрація успішна!");
-    form.reset();
-    document.querySelectorAll("input").forEach(function (i) {
-      i.classList.remove("valid", "invalid");
-    });
+removeBtn.addEventListener("click", () => {
+  const last = container.lastElementChild;
+  if (last && !last.classList.contains("removing")) {
+    last.classList.add("removing");
+    last.addEventListener("animationend", () => last.remove());
+    console.log("Останній елемент видалено");
+  }
+});
+
+//Додаткове завдання
+const variantBtn = document.getElementById("variant-btn");
+const counter = document.getElementById("counter");
+let clicks = 0;
+
+variantBtn.addEventListener("click", () => {
+  clicks++;
+  counter.textContent = `Натискань: ${clicks} / ${VARIANT}`;
+  counter.classList.remove("bump");
+  void counter.offsetWidth;
+  counter.classList.add("bump");
+  if (clicks === VARIANT) {
+    alert(`${STUDENT_NAME} варіант номер ${VARIANT}!`);
+    clicks = 0;
+    counter.textContent = `Натискань: 0 / ${VARIANT}`;
   }
 });
